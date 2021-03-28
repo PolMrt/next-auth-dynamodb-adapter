@@ -44,5 +44,5 @@ Here is a detailed view of what needs to be done in order to have a working adap
 - [x] updateSession
 - [x] deleteSession
 - [x] createVerificationRequest
-- [ ] getVerificationRequest
+- [x] getVerificationRequest
 - [ ] deleteVerificationRequest
