@@ -162,7 +162,21 @@ export default function Adapter(config, options = {}) {
 
     async function deleteUser(userId) {
       _debug("deleteUser", userId);
-      return null;
+
+      try {
+        const deleted = await DynamoClient.delete({
+          TableName,
+          Key: {
+            pk: `USER#${userId}`,
+            sk: `USER#${userId}`,
+          },
+        }).promise();
+
+        return deleted;
+      } catch (error) {
+        console.error("DELETE_USER_ERROR", error);
+        return Promise.reject(new Error("DELETE_USER_ERROR"));
+      }
     }
 
     async function linkAccount(
