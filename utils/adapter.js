@@ -535,7 +535,25 @@ export default function Adapter(config, options = {}) {
       provider
     ) {
       _debug("deleteVerification", identifier, token, secret);
-      return null;
+
+      const hashedToken = createHash("sha256")
+        .update(`${token}${secret}`)
+        .digest("hex");
+
+      try {
+        const data = await DynamoClient.delete({
+          TableName,
+          Key: {
+            pk: `VR#${identifier}`,
+            sk: `VR#${hashedToken}`,
+          },
+        }).promise();
+
+        return data;
+      } catch (error) {
+        console.error("GET_VERIFICATION_REQUEST_ERROR", error);
+        return Promise.reject(new Error("GET_VERIFICATION_REQUEST_ERROR"));
+      }
     }
 
     return {
