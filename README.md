@@ -4,7 +4,9 @@ This project is currently work in progress. I'm trying to add DynamoDB as a Next
 
 I've gone with a single table design. This project is an application of what I'm currently learning with [Alex DeBrie's book](https://www.dynamodbbook.com/). If you to learn more about DynamoDB you definitely should take a look at it !
 
-![Next-auth data schema][https://raw.githubusercontent.com/polmrt/next-auth-dynamodb-adapter/master/.github/img/schema.png]
+<p align="center">
+    <img src="https://raw.githubusercontent.com/polmrt/next-auth-dynamodb-adapter/master/.github/img/schema.png" alt="Next-auth data schema">
+</p>
 
 ## State of the project
 
