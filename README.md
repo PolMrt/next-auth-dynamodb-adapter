@@ -7,6 +7,7 @@ I've gone with a single table design. This project is an application of what I'm
 <p align="center">
     <img src="https://raw.githubusercontent.com/polmrt/next-auth-dynamodb-adapter/master/.github/img/schema.png" alt="Next-auth data schema">
 </p>
+(This schema has an error: verification_reqest have no connection with users, they are a separete entity)
 
 ## DynamoDB configuration required
 
