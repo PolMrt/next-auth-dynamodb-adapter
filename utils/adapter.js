@@ -433,12 +433,66 @@ export default function Adapter(config, options = {}) {
       secret,
       provider
     ) {
-      _debug("createVerificationRequest", identifier);
-      return null;
+      _debug(
+        "createVerificationRequest",
+        identifier,
+        url,
+        token,
+        secret,
+        provider
+      );
+
+      const { baseUrl } = appOptions;
+      const { sendVerificationRequest, maxAge } = provider;
+
+      const hashedToken = createHash("sha256")
+        .update(`${token}${secret}`)
+        .digest("hex");
+
+      let expires = null;
+      if (maxAge) {
+        const dateExpires = new Date();
+        dateExpires.setTime(dateExpires.getTime() + maxAge * 1000);
+
+        expires = dateExpires.toISOString();
+      }
+
+      const now = new Date();
+
+      let item = {
+        pk: `VR#${identifier}`,
+        sk: `VR#${hashedToken}`,
+        token: hashedToken,
+        identifier,
+        type: "VR",
+        expires: expires === null ? null : expires,
+        createdAt: now.toISOString(),
+        updatedAt: now.toISOString(),
+      };
+
+      try {
+        const data = await DynamoClient.put({
+          TableName,
+          Item: item,
+        }).promise();
+
+        await sendVerificationRequest({
+          identifier,
+          url,
+          token,
+          baseUrl,
+          provider,
+        });
+
+        return item;
+      } catch (error) {
+        console.error("CREATE_VERIFICATION_REQUEST_ERROR", error);
+        return Promise.reject(new Error("CREATE_VERIFICATION_REQUEST_ERROR"));
+      }
     }
 
     async function getVerificationRequest(identifier, token, secret, provider) {
-      _debug("getVerificationRequest", identifier, token);
+      _debug("getVerificationRequest", identifier, token, secret);
       return null;
     }
 
@@ -448,7 +502,7 @@ export default function Adapter(config, options = {}) {
       secret,
       provider
     ) {
-      _debug("deleteVerification", identifier, token);
+      _debug("deleteVerification", identifier, token, secret);
       return null;
     }
 

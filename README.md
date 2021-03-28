@@ -16,11 +16,13 @@ You need to add these environment variables to a `.env.local` file :
 
 - `GITHUB_ID` Github oauth app id
 - `GITHUB_SECRET` Github oauth app secret
+- `EMAIL_SERVER` Email server
+- `EMAIL_FROM` Email from
 - `NEXT_AUTH_AWS_ACCESS_KEY` AWS IAM access key
 - `NEXT_AUTH_AWS_SECRET_KEY` AWS IAM secret key
 - `NEXT_AUTH_AWS_REGION` AWS region
 
-Note that Github are only used as a oauth provider for testing purpose.
+Note that Github and Email are only used as providers for testing purpose.
 AWS secret start with `NEXT_AUTH` in order to not conflict with [Vercel's reserved environment variables](https://vercel.com/docs/environment-variables#reserved-environment-variables).
 
 ## State of the project
@@ -41,6 +43,6 @@ Here is a detailed view of what needs to be done in order to have a working adap
 - [x] getSession
 - [x] updateSession
 - [x] deleteSession
-- [ ] createVerificationRequest
+- [x] createVerificationRequest
 - [ ] getVerificationRequest
 - [ ] deleteVerificationRequest
