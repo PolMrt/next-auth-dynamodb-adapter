@@ -87,9 +87,7 @@ export default function Adapter(config, options = {}) {
           },
         }).promise();
 
-        console.log(data);
-
-        return data.Item;
+        return data.Item || null;
       } catch (error) {
         console.error("GET_USER", error);
         return Promise.reject(new Error("GET_USER"));

@@ -30,7 +30,7 @@ Work in progress.
 Here is a detailed view of what needs to be done in order to have a working adapter :
 
 - [x] createUser
-- [ ] getUser (done but need to be tested)
+- [x] getUser
 - [x] getUserByEmail
 - [x] getUserByProviderAccountId
 - [ ] updateUser
