@@ -27,7 +27,7 @@ AWS secret start with `NEXT_AUTH` in order to not conflict with [Vercel's reserv
 
 ## State of the project
 
-Work in progress.
+All functions needed for an adapter in Next-Auth have been done. I'm now testing different scenarios to see if everythings work. Also, need to clean the code before PR.
 
 Here is a detailed view of what needs to be done in order to have a working adapter :
 
