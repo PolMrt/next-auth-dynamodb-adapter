@@ -233,7 +233,21 @@ export default function Adapter(config, options = {}) {
 
     async function unlinkAccount(userId, providerId, providerAccountId) {
       _debug("unlinkAccount", userId, providerId, providerAccountId);
-      return null;
+
+      try {
+        const deleted = await DynamoClient.delete({
+          TableName,
+          Key: {
+            pk: `USER#${userId}`,
+            sk: `ACCOUNT#${providerId}#${providerAccountId}`,
+          },
+        }).promise();
+
+        return deleted;
+      } catch (error) {
+        console.error("UNLINK_ACCOUNT_ERROR", error);
+        return Promise.reject(new Error("UNLINK_ACCOUNT_ERROR"));
+      }
     }
 
     async function createSession(user) {

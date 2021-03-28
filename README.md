@@ -36,7 +36,7 @@ Here is a detailed view of what needs to be done in order to have a working adap
 - [ ] updateUser
 - [x] deleteUser
 - [x] linkAccount
-- [ ] unlinkAccount
+- [x] unlinkAccount
 - [x] createSession
 - [x] getSession
 - [x] updateSession
