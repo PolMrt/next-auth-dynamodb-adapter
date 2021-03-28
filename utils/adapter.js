@@ -551,8 +551,8 @@ export default function Adapter(config, options = {}) {
 
         return data;
       } catch (error) {
-        console.error("GET_VERIFICATION_REQUEST_ERROR", error);
-        return Promise.reject(new Error("GET_VERIFICATION_REQUEST_ERROR"));
+        console.error("DELETE_VERIFICATION_REQUEST_ERROR", error);
+        return Promise.reject(new Error("DELETE_VERIFICATION_REQUEST_ERROR"));
       }
     }
 
