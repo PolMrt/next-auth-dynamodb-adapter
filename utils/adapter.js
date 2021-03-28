@@ -157,7 +157,47 @@ export default function Adapter(config, options = {}) {
 
     async function updateUser(user) {
       _debug("updateUser", user);
-      return null;
+
+      try {
+        const now = new Date();
+        const data = await DynamoClient.update({
+          TableName,
+          Key: {
+            pk: user.pk,
+            sk: user.sk,
+          },
+          UpdateExpression:
+            "set #name = :name, #email = :email, #gsi1pk = :gsi1pk, #gsi1sk = :gsi1sk, #image = :image, #emailVerified = :emailVerified, #username = :username, #updatedAt = :updatedAt",
+          ExpressionAttributeNames: {
+            "#name": "name",
+            "#email": "email",
+            "#gsi1pk": "GSI1PK",
+            "#gsi1sk": "GSI1SK",
+            "#image": "image",
+            "#emailVerified": "emailVerified",
+            "#username": "username",
+            "#updatedAt": "updatedAt",
+          },
+          ExpressionAttributeValues: {
+            ":name": user.name || null,
+            ":email": user.email,
+            ":gsi1pk": `USER#${user.email}`,
+            ":gsi1sk": `USER#${user.email}`,
+            ":image": user.image || null,
+            ":emailVerified": user.emailVerified
+              ? user.emailVerified.toISOString()
+              : null,
+            ":username": user.username || null,
+            ":updatedAt": now.toISOString(),
+          },
+          ReturnValues: "UPDATED_NEW",
+        }).promise();
+
+        return { ...user, ...data.Attributes };
+      } catch (error) {
+        console.error("UPDATE_USER_ERROR", error);
+        return Promise.reject(new Error("UPDATE_USER_ERROR"));
+      }
     }
 
     async function deleteUser(userId) {

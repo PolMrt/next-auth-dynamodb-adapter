@@ -35,7 +35,7 @@ Here is a detailed view of what needs to be done in order to have a working adap
 - [x] getUser
 - [x] getUserByEmail
 - [x] getUserByProviderAccountId
-- [ ] updateUser
+- [x] updateUser
 - [x] deleteUser
 - [x] linkAccount
 - [x] unlinkAccount
