@@ -134,12 +134,23 @@ export default function Adapter(config, options = {}) {
             "#gsi1sk": "GSI1SK",
           },
           ExpressionAttributeValues: {
-            ":gsi1pk": `ACCOUNT#${providerId}`,
-            ":gsi1sk": `ACCOUNT#${providerAccountId}`,
+            ":gsi1pk": `ACCOUNT#${providerAccountId}`,
+            ":gsi1sk": `ACCOUNT#${providerId}`,
           },
         }).promise();
 
-        return data.Items[0] || null;
+        if (!data) return null;
+        if (!data.Items.length > 0) return null;
+
+        const user = await DynamoClient.get({
+          TableName,
+          Key: {
+            pk: `USER#${data.Items[0].userId}`,
+            sk: `USER#${data.Items[0].userId}`,
+          },
+        }).promise();
+
+        return user.Item || null;
       } catch (error) {
         console.error("GET_USER_BY_PROVIDER_ACCOUNT_ID", error);
         return Promise.reject(new Error("GET_USER_BY_PROVIDER_ACCOUNT_ID"));
@@ -354,7 +365,39 @@ export default function Adapter(config, options = {}) {
 
     async function deleteSession(sessionToken) {
       _debug("deleteSession", sessionToken);
-      return null;
+
+      try {
+        const data = await DynamoClient.query({
+          TableName,
+          IndexName: "GSI1",
+          KeyConditionExpression: "#gsi1pk = :gsi1pk AND #gsi1sk = :gsi1sk",
+          ExpressionAttributeNames: {
+            "#gsi1pk": "GSI1PK",
+            "#gsi1sk": "GSI1SK",
+          },
+          ExpressionAttributeValues: {
+            ":gsi1pk": `SESSION#${sessionToken}`,
+            ":gsi1sk": `SESSION#${sessionToken}`,
+          },
+        }).promise();
+
+        if (data?.Items?.length <= 0) return null;
+
+        const infoToDelete = data.Items[0];
+
+        const deleted = await DynamoClient.delete({
+          TableName,
+          Key: {
+            pk: infoToDelete.pk,
+            sk: infoToDelete.sk,
+          },
+        }).promise();
+
+        return deleted;
+      } catch (error) {
+        console.error("DELETE_SESSION_ERROR", error);
+        return Promise.reject(new Error("DELETE_SESSION_ERROR"));
+      }
     }
 
     async function createVerificationRequest(

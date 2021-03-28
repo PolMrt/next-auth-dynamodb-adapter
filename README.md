@@ -40,7 +40,7 @@ Here is a detailed view of what needs to be done in order to have a working adap
 - [x] createSession
 - [x] getSession
 - [x] updateSession
-- [ ] deleteSession
+- [x] deleteSession
 - [ ] createVerificationRequest
 - [ ] getVerificationRequest
 - [ ] deleteVerificationRequest
