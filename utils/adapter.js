@@ -18,7 +18,6 @@ export default function Adapter(config, options = {}) {
   const DynamoClient = new config.AWS.DynamoDB.DocumentClient();
 
   async function getAdapter(appOptions) {
-    // console.log(appOptions);
     // Display debug output if debug option enabled
     function _debug(...args) {
       if (appOptions.debug) {

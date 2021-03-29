@@ -14,6 +14,8 @@ export default function Page() {
       {session && (
         <>
           Signed in as {session.user.email} <br />
+          <pre>{JSON.stringify(session, null, 2)}</pre>
+          <br />
           <button onClick={() => signOut()}>Sign out</button>
         </>
       )}
