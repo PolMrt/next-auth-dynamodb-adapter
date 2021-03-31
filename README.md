@@ -1,6 +1,6 @@
 # DynamoDB next-auth
 
-This project is currently **work in progress**. I'm trying to add DynamoDB as a Next-Auth database adapter.
+This project is here to test my pr for a [next-auth dynamodb adapter](https://github.com/nextauthjs/adapters/pull/44).
 
 I've gone with a single table design. This project is an application of what I'm currently learning with [Alex DeBrie's book](https://www.dynamodbbook.com/). If you to learn more about DynamoDB you definitely should take a look at it !
 
